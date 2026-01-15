@@ -1,0 +1,60 @@
+[
+  {
+    "question": "Что такое градиентный бустинг?",
+    "expected_topics": [
+      "градиентный бустинг",
+      "ансамбли",
+      "деревья решений"
+    ],
+    "expected_source": "gradientnyj-busting.md",
+    "category": "definition",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Объясни байесовский подход к оцениванию параметров",
+    "expected_topics": [
+      "байесовский подход",
+      "апостериорное распределение",
+      "априорное распределение"
+    ],
+    "expected_source": "bajesovskij-podhod-k-ocenivaniyu.md",
+    "category": "explanation",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Как работает механизм attention в трансформерах?",
+    "expected_topics": [
+      "attention",
+      "трансформеры",
+      "self-attention",
+      "механизм внимания"
+    ],
+    "expected_source": "transformery.md",
+    "category": "explanation",
+    "difficulty": "hard"
+  },
+  {
+    "question": "Что такое переобучение и как с ним бороться?",
+    "expected_topics": [
+      "переобучение",
+      "регуляризация",
+      "обобщающая способность"
+    ],
+    "expected_source": "obobshayushaya-sposobnost-klassicheskaya-teoriya.md",
+    "category": "problem_solution",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Какие метрики используются для оценки качества классификации?",
+    "expected_topics": [
+      "метрики",
+      "классификация",
+      "precision",
+      "recall",
+      "f1-score"
+    ],
+    "expected_source": "metriki-klassifikacii-i-regressii.md",
+    "category": "definition",
+    "difficulty": "easy"
+  }
+]

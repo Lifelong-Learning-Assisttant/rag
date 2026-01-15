@@ -1,0 +1,143 @@
+[
+  {
+    "question": "Что такое градиентный бустинг?",
+    "expected_topics": ["градиентный бустинг", "ансамбли", "деревья решений"],
+    "expected_source": "gradientnyj-busting.md",
+    "category": "definition",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Объясни байесовский подход к оцениванию параметров",
+    "expected_topics": ["байесовский подход", "апостериорное распределение", "априорное распределение"],
+    "expected_source": "bajesovskij-podhod-k-ocenivaniyu.md",
+    "category": "explanation",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Как работает механизм attention в трансформерах?",
+    "expected_topics": ["attention", "трансформеры", "self-attention", "механизм внимания"],
+    "expected_source": "transformery.md",
+    "category": "explanation",
+    "difficulty": "hard"
+  },
+  {
+    "question": "Что такое переобучение и как с ним бороться?",
+    "expected_topics": ["переобучение", "регуляризация", "обобщающая способность"],
+    "expected_source": "obobshayushaya-sposobnost-klassicheskaya-teoriya.md",
+    "category": "problem_solution",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Какие метрики используются для оценки качества классификации?",
+    "expected_topics": ["метрики", "классификация", "precision", "recall", "f1-score"],
+    "expected_source": "metriki-klassifikacii-i-regressii.md",
+    "category": "definition",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Что такое матричная факторизация в рекомендательных системах?",
+    "expected_topics": ["матричная факторизация", "рекомендательные системы", "латентные факторы"],
+    "expected_source": "matrichnaya-faktorizaciya.md",
+    "category": "explanation",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Объясни принцип работы свёрточных нейронных сетей",
+    "expected_topics": ["свёрточные сети", "CNN", "свёртка", "pooling"],
+    "expected_source": "svyortochnye-nejroseti.md",
+    "category": "explanation",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Что такое кросс-валидация и зачем она нужна?",
+    "expected_topics": ["кросс-валидация", "валидация", "k-fold"],
+    "expected_source": "kross-validaciya.md",
+    "category": "definition",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Как работает метод обратного распространения ошибки?",
+    "expected_topics": ["backpropagation", "обратное распространение", "градиент", "нейронные сети"],
+    "expected_source": "metod-obratnogo-rasprostraneniya-oshibki.md",
+    "category": "explanation",
+    "difficulty": "hard"
+  },
+  {
+    "question": "Что такое регуляризация в машинном обучении?",
+    "expected_topics": ["регуляризация", "L1", "L2", "переобучение"],
+    "expected_source": "tonkosti-obucheniya.md",
+    "category": "definition",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Объясни разницу между онлайн и офлайн обучением",
+    "expected_topics": ["онлайн обучение", "стохастическая оптимизация", "SGD"],
+    "expected_source": "onlajn-obuchenie-i-stohasticheskaya-optimizaciya.md",
+    "category": "comparison",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Что такое генеративно-состязательные сети (GAN)?",
+    "expected_topics": ["GAN", "генеративные модели", "дискриминатор", "генератор"],
+    "expected_source": "generativno-sostyazatelnye-seti-(gan).md",
+    "category": "definition",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Как работают рекуррентные нейронные сети?",
+    "expected_topics": ["RNN", "рекуррентные сети", "последовательности", "LSTM"],
+    "expected_source": "nejroseti-dlya-raboty-s-posledovatelnostyami.md",
+    "category": "explanation",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Что такое variational autoencoder (VAE)?",
+    "expected_topics": ["VAE", "автоэнкодер", "вариационный", "латентное пространство"],
+    "expected_source": "variational-autoencoder-(vae).md",
+    "category": "definition",
+    "difficulty": "hard"
+  },
+  {
+    "question": "Объясни bias-variance decomposition",
+    "expected_topics": ["bias", "variance", "разложение", "ошибка"],
+    "expected_source": "bias-variance-decomposition.md",
+    "category": "explanation",
+    "difficulty": "hard"
+  },
+  {
+    "question": "Что такое решающие деревья?",
+    "expected_topics": ["решающие деревья", "decision tree", "разбиение"],
+    "expected_source": "reshayushchiye-derevya.md",
+    "category": "definition",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Как работает метод k-средних для кластеризации?",
+    "expected_topics": ["кластеризация", "k-means", "центроиды"],
+    "expected_source": "klasterizaciya.md",
+    "category": "explanation",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Что такое обучение с подкреплением?",
+    "expected_topics": ["reinforcement learning", "обучение с подкреплением", "агент", "награда"],
+    "expected_source": "obuchenie-s-podkrepleniem.md",
+    "category": "definition",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Объясни принцип максимальной энтропии",
+    "expected_topics": ["энтропия", "максимальная энтропия", "распределение"],
+    "expected_source": "eksponencialnyj-klass-raspredelenij-i-princip-maksimalnoj-entropii.md",
+    "category": "explanation",
+    "difficulty": "hard"
+  },
+  {
+    "question": "Что такое дистилляция знаний в нейронных сетях?",
+    "expected_topics": ["дистилляция", "knowledge distillation", "учитель", "ученик"],
+    "expected_source": "distillyaciya-znanij.md",
+    "category": "definition",
+    "difficulty": "medium"
+  }
+]
+
