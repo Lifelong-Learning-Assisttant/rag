@@ -8,13 +8,16 @@ services:
       - "6333:6333"  # HTTP API
       - "6334:6334"  # gRPC API
     volumes:
-      - qdrant_storage_dev:/qdrant/storage
+      - rag_qdrant_storage:/qdrant/storage
     environment:
       - QDRANT__SERVICE__HTTP_PORT=6333
       - QDRANT__SERVICE__GRPC_PORT=6334
     restart: unless-stopped
     networks:
-      - rag_network_dev
+      rag_rag_network:
+        aliases:
+          - rag-qdrant
+          - qdrant-dev
 
   redis:
     image: redis:7.4.2-alpine
@@ -22,11 +25,14 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - redis_data_dev:/data
+      - rag_redis_data:/data
     command: redis-server --appendonly no
     restart: unless-stopped
     networks:
-      - rag_network_dev
+      rag_rag_network:
+        aliases:
+          - rag-redis
+          - redis-dev
 
   redis-commander:
     image: rediscommander/redis-commander:latest
@@ -37,7 +43,9 @@ services:
       - REDIS_HOSTS=local:redis-dev:6379
     restart: unless-stopped
     networks:
-      - rag_network_dev
+      rag_rag_network:
+        aliases:
+          - rag-rediscommander
     depends_on:
       - redis
 
@@ -61,17 +69,19 @@ services:
       - QDRANT_COLLECTION_NAME=${QDRANT_COLLECTION_NAME:-yandex_handbook_child_chunks}
     restart: unless-stopped
     networks:
-      - rag_network_dev
+      rag_rag_network:
+        aliases:
+          - rag-api
     depends_on:
       - qdrant
       - redis
 
 volumes:
-  qdrant_storage_dev:
-    driver: local
-  redis_data_dev:
-    driver: local
+  rag_qdrant_storage:
+    external: true
+  rag_redis_data:
+    external: true
 
 networks:
-  rag_network_dev:
-    driver: bridge
+  rag_rag_network:
+    name: rag_rag_network
