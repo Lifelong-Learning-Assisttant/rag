@@ -84,4 +84,4 @@ volumes:
 
 networks:
   rag_rag_network:
-    name: rag_rag_network
+    external: true
