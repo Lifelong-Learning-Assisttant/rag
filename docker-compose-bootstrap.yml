@@ -41,12 +41,18 @@ services:
       uv run python download.py;
       
       echo '⏳ Waiting for Qdrant...';
-      until curl -s http://qdrant:6333/health | grep -q 'ok'; do sleep 2; done;
+      for i in $(seq 1 30); do
+        if curl -s http://qdrant:6333/ | grep -q 'qdrant'; then
+          echo '✅ Qdrant is ready!';
+          break
+        fi
+        echo \"📡 Qdrant not ready yet (attempt $$i/30)...\";
+        sleep 5;
+        if [ $$i -eq 30 ]; then echo '❌ Qdrant timeout!'; exit 1; fi
+      done;
       
       echo '🚀 Importing Qdrant Snapshot...';
-      curl -X POST 'http://qdrant:6333/collections/yandex_handbook_child_chunks/snapshots/upload?priority=snapshot' \
-        -H 'Content-Type: multipart/form-data' \
-        -F 'snapshot=@/backups/qdrant_backup.snapshot';
+      curl -X POST 'http://qdrant:6333/collections/yandex_handbook_child_chunks/snapshots/upload?priority=snapshot' -H 'Content-Type: multipart/form-data' -F 'snapshot=@/backups/qdrant_backup.snapshot';
       
       echo '📦 Extracting Redis RDB...';
       tar xzf /backups/redis_backup.tar.gz -C /redis_data;
