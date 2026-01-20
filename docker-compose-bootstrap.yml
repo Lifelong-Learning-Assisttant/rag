@@ -22,7 +22,7 @@ services:
 
   # 2. Загрузчик и импортер
   bootstrap-loader:
-    image: ghcr.io/lifelong-learning-assisttant/rag-backup-downloader:v001
+    image: medphisiker/rag-backup-downloader:v001
     build:
       context: ./backup_downloader
     volumes:
