@@ -1,63 +1,22 @@
 name: rag-bootstrap
 
 services:
-  # 1. Инфраструктура
-  qdrant:
-    image: qdrant/qdrant:v1.12.4
-    container_name: qdrant-bootstrap
-    ports:
-      - "6333:6333"
-    volumes:
-      - rag_qdrant_storage:/qdrant/storage
-    networks:
-      - rag_network
-
-  redis:
-    image: redis:7.4.2-alpine
-    container_name: redis-bootstrap
-    volumes:
-      - rag_redis_data:/data
-    networks:
-      - rag_network
-
-  # 2. Загрузчик и импортер
+  # Загрузчик и импортер (запускается отдельно, когда инфраструктура уже поднята)
   bootstrap-loader:
     image: medphisiker/rag-backup-downloader:v001
-    build:
-      context: ./backup_downloader
+    container_name: rag-bootstrap-loader
+    # build:
+    #   context: ./backup_downloader
     volumes:
       - .:/backups
       - rag_redis_data:/redis_data
+      - ./backup_downloader/bootstrap_and_restore.sh:/app/bootstrap_and_restore.sh
     environment:
-      - QDRANT_URL=http://qdrant:6333
-    depends_on:
-      - qdrant
-      - redis
+      - QDRANT_HOST=rag-qdrant
+      - QDRANT_PORT=6333
     networks:
       - rag_network
-    entrypoint: >
-      sh -c "
-      echo '📥 Downloading backups...';
-      uv run python download.py;
-      
-      echo '⏳ Waiting for Qdrant...';
-      for i in $(seq 1 30); do
-        if curl -s http://qdrant:6333/ | grep -q 'qdrant'; then
-          echo '✅ Qdrant is ready!';
-          break
-        fi
-        echo \"📡 Qdrant not ready yet (attempt $$i/30)...\";
-        sleep 5;
-        if [ $$i -eq 30 ]; then echo '❌ Qdrant timeout!'; exit 1; fi
-      done;
-      
-      echo '🚀 Importing Qdrant Snapshot...';
-      curl -X POST 'http://qdrant:6333/collections/yandex_handbook_child_chunks/snapshots/upload?priority=snapshot' -H 'Content-Type: multipart/form-data' -F 'snapshot=@/backups/qdrant_backup.snapshot';
-      
-      echo '📦 Extracting Redis RDB...';
-      tar xzf /backups/redis_backup.tar.gz -C /redis_data;
-      
-      echo '✅ Bootstrap completed successfully!';"
+    entrypoint: ["/bin/sh", "/app/bootstrap_and_restore.sh"]
 
 networks:
   rag_network:
