@@ -1,9 +1,10 @@
-FROM ghcr.io/astral-sh/uv:0.9.24-python3.13-bookworm-slim
+FROM python:3.13-slim-bookworm
+
+# Устанавливаем curl и uv
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+RUN pip install uv==0.9.26
 
 WORKDIR /app
-
-# Устанавливаем curl
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Копируем файлы проекта
 COPY pyproject.toml .

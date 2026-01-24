@@ -1,10 +1,10 @@
 # Dockerfile для RAG API сервиса
-FROM python:3.12-slim
+FROM python:3.13-slim
 
 WORKDIR /app
 
 # Установка uv
-COPY --from=ghcr.io/astral-sh/uv:0.9.24 /uv /usr/local/bin/uv
+RUN pip install uv==0.9.26
 
 # Копирование файлов проекта
 COPY pyproject.toml uv.lock* ./
