@@ -106,8 +106,10 @@ async def health_check(ret: RAGRetriever = Depends(get_retriever)):
         
         # Проверка Redis
         redis_connected = True
+        redis_docs_count = None
         try:
             ret.parent_store.mget(["test"])
+            redis_docs_count = ret.get_parent_docs_count()
         except Exception:
             redis_connected = False
         
@@ -115,6 +117,7 @@ async def health_check(ret: RAGRetriever = Depends(get_retriever)):
             status="healthy" if collection_exists and redis_connected else "degraded",
             qdrant_connected=True,
             redis_connected=redis_connected,
+            redis_parent_docs_count=redis_docs_count,
             collection_exists=collection_exists,
             collection_vectors_count=vectors_count
         )

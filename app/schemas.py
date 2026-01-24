@@ -85,6 +85,7 @@ class HealthResponse(BaseModel):
     status: str
     qdrant_connected: bool
     redis_connected: bool
+    redis_parent_docs_count: int | None = None
     collection_exists: bool
     collection_vectors_count: int | None = None
 

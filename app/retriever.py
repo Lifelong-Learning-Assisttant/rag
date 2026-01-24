@@ -114,9 +114,21 @@ class RAGRetriever:
             print(f"Ошибка загрузки parent chunk {parent_id}: {e}")
         return None
     
+    def get_parent_docs_count(self) -> int:
+        """Получить количество parent документов в Redis"""
+        try:
+            count = 0
+            # yield_keys возвращает итератор по ключам с префиксом
+            for _ in self.parent_store.yield_keys():
+                count += 1
+            return count
+        except Exception as e:
+            print(f"Ошибка подсчета ключей Redis: {e}")
+            return 0
+    
     def search(
-        self, 
-        query: str, 
+        self,
+        query: str,
         top_k: int | None = None,
         max_tokens: int | None = None
     ) -> List[Document]:
@@ -165,8 +177,8 @@ class RAGRetriever:
         return parent_chunks
     
     def search_with_scores(
-        self, 
-        query: str, 
+        self,
+        query: str,
         top_k: int | None = None,
         max_tokens: int | None = None
     ) -> List[Tuple[Document, float]]:
@@ -222,8 +234,8 @@ class RAGRetriever:
         return parent_chunks_with_scores
     
     def search_with_hyde(
-        self, 
-        query: str, 
+        self,
+        query: str,
         top_k: int | None = None,
         max_tokens: int | None = None,
         score_threshold: float | None = None
