@@ -58,6 +58,7 @@ class RAGRetriever:
             retrieval_mode=RetrievalMode.HYBRID,
             vector_name="dense",  # Указываем имя dense вектора
             sparse_vector_name="sparse",  # Указываем имя sparse вектора
+            validate_collection_config=False,  # Отключаем валидацию, так как она вызывает таймауты даже с кэшем
         )
     
     def _init_redis(self):

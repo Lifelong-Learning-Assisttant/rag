@@ -104,26 +104,28 @@ docker compose up -d --build
 
 ### 3. Загрузка данных (только первый раз!)
 
-Если базы данных пусты, выберите один из вариантов наполнения:
+Для первичной инициализации на новом сервере рекомендуется использовать общий скрипт в корне проекта:
+
+```bash
+# Инициализация всей системы (сети, тома, бэкапы, БД)
+./init-new-server.sh dev
+```
+
+Если вы хотите выполнить загрузку данных для RAG отдельно, выберите один из вариантов:
 
 #### Вариант А: Загрузка из исходных Markdown-файлов (ETL)
 Используйте этот способ, если хотите запустить весь процесс обработки текста и создания эмбеддингов заново.
 
-Запустите `Jupyter notebook` в `notebook/rag_etl_loader.ipynb`
+Запустите `Jupyter notebook` в `notebook/rag_etl_loader.ipynb` и выполните все ячейки.
 
-В интерфейсе Jupyter откройте файл и выполните:
-```
-Cell -> Run All
-```
-
-#### Вариант Б: Быстрое развертывание из бэкапа (рекомендуется)
-Скачивание готовых снапшотов Qdrant и дампов Redis. Это значительно быстрее, чем полная пересборка индекса.
+#### Вариант Б: Быстрое развертывание из бэкапа (через скрипт)
+Используйте встроенный механизм восстановления через Docker Compose:
 
 ```bash
-# Запустить утилиту скачивания (нужен Docker)
-docker run --rm -v $(pwd)/rag/backups:/backups \
-  ghcr.io/lifelong-learning-assisttant/rag-backup-downloader:v001
+# Выполняет скачивание и импорт снапшотов в Qdrant и Redis
+(cd rag && docker compose -f docker-compose-bootstrap.yml up --abort-on-container-exit)
 ```
+
 Подробную инструкцию по восстановлению из этих файлов см. в [Backup Downloader](./backup_downloader/README.md) и [Qdrant Migration](./docs/qdrant-migration.md).
 
 ### 4. Проверка
@@ -250,7 +252,13 @@ docker compose up -d --build rag-api
 ## ❓ Проблемы?
 
 ### "Коллекция не найдена"
-Запустите ETL процесс в Jupyter ([`notebook/rag_etl_loader.ipynb`](./notebook/rag_etl_loader.ipynb)) или скачайте бэкап.
+Это означает, что база данных пуста. Запустите `./init-new-server.sh dev` из корня проекта или выполните Bootstrap (Вариант Б в разделе "Загрузка данных").
+
+### "ConnectTimeout / Request timed out" при старте
+Если сервис падает при инициализации RAG Retriever, проверьте:
+1. Доступность LLM API (ai-mediator).
+2. Наличие `HF_TOKEN` в `.env` для скачивания моделей.
+3. В `rag/app/retriever.py` параметр `validate_collection_config` должен быть `False` для пропуска сетевой проверки при старте.
 
 ### Сервисы не запускаются
 ```bash

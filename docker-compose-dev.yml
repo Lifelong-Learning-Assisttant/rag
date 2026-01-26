@@ -59,6 +59,9 @@ services:
       - .env
     ports:
       - "127.0.0.1:8000:8000"
+    volumes:
+      - .:/app
+      - rag_fastembed_cache:/root/.cache/fastembed
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OPENAI_API_BASE=${OPENAI_API_BASE:-https://api.openai.com/v1}
@@ -67,6 +70,7 @@ services:
       - QDRANT_URL=http://qdrant-dev:6333
       - REDIS_URL=redis://redis-dev:6379
       - QDRANT_COLLECTION_NAME=${QDRANT_COLLECTION_NAME:-yandex_handbook_child_chunks}
+      - HF_TOKEN=${HF_TOKEN}
     restart: unless-stopped
     networks:
       rag_rag_network:
@@ -81,6 +85,8 @@ volumes:
     external: true
   rag_redis_data:
     external: true
+  rag_fastembed_cache:
+    external: false
 
 networks:
   rag_rag_network:
